@@ -1,0 +1,28 @@
+1. SELECT id_zesp from zespoly order by id_zesp desc limit 1;
+
+insert INTO zespoly (id_zesp,nazwa) VALUES ((select id_zesp from zespoly order by id_zesp desc limit 1)+10,'SYSTEMY WBUDOWANE');
+
+2. update pracownicy SET placa_pod =placa_pod + 0.2*(select avg(p.placa_pod) from pracownicy p where p.id_zesp is not null and p.id_zesp=id_zesp group by p.id_zesp order by avg desc limit 1) where id_zesp is not null and placa_pod < 0.5*(select placa_pod from pracownicy order by placa_pod desc limit 1);
+
+
+3. delete from pracownicy where (select id_prac from pracownicy where nazwisko='Nowicki')=id_szefa and placa_pod>1000;
+
+4. insert into etaty values ('STUDENT',0,330);
+
+5. insert into pracownicy values ((select max(id_prac) from pracownicy)+10,'Poleski','Maciej','STUDENT',NULL,now(),330,0.05*(select avg(placa_pod) from pracownicy where id_zesp=(select id_zesp from zespoly where nazwa='ADMINISTRACJA')),40);
+
+6. update pracownicy set placa_pod=(select avg(a.placa_pod) from pracownicy a where a.etat=etat) where id_prac=(select a.id_prac from pracownicy a where a.etat=etat  order by placa_pod limit 1);
+
+7. update pracownicy set placa_dod=(select avg(placa_pod) where id_szefa=(select id_prac where nazwisko='Marecki')) where id_zesp=20;
+
+8. update pracownicy set placa_pod=1.25*placa_pod where id_zesp=(select id_zesp from zespoly where nazwa='SYSTEMY ROZPROSZONE');
+
+9. update etaty set placa_od=0.9*placa_od,placa_do=1.2*placa_do where (select sum(placa_pod) from pracownicy where etat=nazwa)=(select max(sum) from (select sum(placa_pod) from pracownicy group by etat) foo);
+
+10. delete from zespoly where id_zesp not in (select id_zesp from pracownicy where id_zesp is not null);
+
+11. delete from pracownicy where placa_dod is null and etat='ASYSTENT';
+
+12. delete from pracownicy where id_prac not in (select distinct id_szefa from pracownicy where id_szefa is not null);
+
+13. delete from pracownicy where id_zesp=(select id_zesp from zespoly where nazwa='SYSTEMY ROZPROSZONE') and (select count(*) from (select * from etaty where placa_pod >= placa_od and placa_pod <=placa_do) foo)>=2;

@@ -1,0 +1,26 @@
+1. select id_zesp,max(placa_pod+placa_dod) from pracownicy where id_zesp is not null group by id_zesp;
+
+2. SELECT avg(placa_pod) from pracownicy having count(*) >12;
+
+3. select id_zesp,count(*) from pracownicy where (etat != 'PROFESOR' ) and (id_zesp is not null) group by id_zesp having avg(placa_pod)>1000 order by sum(placa_pod);
+
+3. select id_zesp,count(case when etat!='PROFESOR' then 1 else null end) from pracownicy where (id_zesp is not null) group by id_zesp having avg(placa_pod)>1000 order by sum(placa_pod);
+
+4. select min(placa_pod),max(placa_pod),max(placa_pod)-min(placa_pod) as diff,id_zesp from pracownicy where id_zesp is not null  group by id_zesp;
+
+
+5. select etat, avg(placa_pod) from pracownicy group by etat order by avg(placa_pod) desc;
+
+6. select count(*) from pracownicy where etat='PROFESOR';
+
+7. select sum(placa_pod+placa_dod),id_zesp from pracownicy where id_zesp is not null group by id_zesp;
+
+8. SELECT id_szefa as id_prac,min(placa_pod) from pracownicy where id_szefa is not null group by id_szefa order by min(placa_pod) desc;
+
+9. select case when count(*)-count(distinct nazwisko) = 0 then 'tak' else 'nie' end from pracownicy where nazwisko is not null;
+
+10. SELECT id_zesp from pracownicy where id_zesp is not null group by id_zesp having count(*)>3;
+
+11. select etat,avg(placa_pod),count(*) from pracownicy where extract(year from zatrudniony)<=1990 group by etat;
+
+

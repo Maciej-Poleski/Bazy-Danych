@@ -1,0 +1,25 @@
+Rozkład języków
+
+select case when name is not null then name else 'unknown' end as language,count(*) as submits from submits left outer join jezyk on substring(lower(filename) from '[^.]*$') = ext group by name;
+select case when name is not null then name else 'unknown' end as language,count(*) as submits from submits left outer join jezyk j on language= j.id group by j.id order by j.id;
+
+Rozkład liczby submitów
+
+./bazy5a1.py [database] [user] | psql
+
+Rozkład procentowego rozwiązania zadań
+
+select shortname as name,
+nullif(count(nullif(ocena=1,False)),0) as "100",
+nullif(count(nullif(ocena<1 and ocena>=0.9,False)),0) as "100-90",
+nullif(count(nullif(ocena<0.9 and ocena>=0.8,False)),0) as "90-80",
+nullif(count(nullif(ocena<0.8 and ocena>=0.7,False)),0) as "80-70",
+nullif(count(nullif(ocena<0.7 and ocena>=0.6,False)),0) as "70-60",
+nullif(count(nullif(ocena<0.6 and ocena>=0.5,False)),0) as "60-50",
+nullif(count(nullif(ocena<0.5 and ocena>=0.4,False)),0) as "50-40",
+nullif(count(nullif(ocena<0.4 and ocena>=0.3,False)),0) as "40-30",
+nullif(count(nullif(ocena<0.3 and ocena>=0.2,False)),0) as "30-20",
+nullif(count(nullif(ocena<0.2 and ocena>=0.1,False)),0) as "20-10",
+nullif(count(nullif(ocena<0.1 and ocena>=0.0,False)),0) as "10-0",
+count(*) as all from (select max(ocena) as ocena,problemsid from submits group by problemsid,usersid) s full outer join problems p on p.id=problemsid where p.id!=28 group by p.id order by p.name;
+

@@ -1,0 +1,26 @@
+1. SELECT nazwisko,etat from pracownicy where id_zesp = (select id_zesp from pracownicy where nazwisko='Nowak');
+
+2. SELECT * from pracownicy where etat='PROFESOR' order by zatrudniony limit 1;
+
+3. SELECT a.nazwisko,a.zatrudniony from pracownicy a where a.id_prac in (select id_prac from pracownicy where a.id_zesp=id_zesp order by zatrudniony limit 1) order by zatrudniony;
+
+4. SELECT * from zespoly z where not exists (select * from pracownicy where id_zesp=z.id_zesp);
+
+5. SELECT nazwisko from pracownicy p where p.etat='PROFESOR' and not exists (select * from pracownicy where p.id_prac=id_szefa and etat='ASYSTENT' );
+
+6. SELECT id_zesp from pracownicy group by id_zesp order by sum(placa_pod) desc limit 1;
+
+7. select nazwa from zespoly where id_zesp=( SELECT id_zesp from pracownicy group by id_zesp order by count(*) desc limit 1);
+
+8. SELECT p.nazwisko,p.imie from pracownicy p where p.placa_pod>0.5*(select max(placa_pod) from pracownicy where id_zesp=p.id_zesp);
+
+9. SELECT * from zespoly z where not exists (select * from pracownicy where id_zesp=z.id_zesp);
+
+10. SELECT nazwisko,placa_pod from pracownicy order by placa_pod desc limit 3;
+
+11. SELECT * from pracownicy p where (p.id_zesp is not null) and not exists (select * from zespoly where id_zesp=p.id_zesp );
+
+12. SELECT nazwisko,z.nazwa,srednia from pracownicy left outer join zespoly z using(id_zesp) left outer join (select id_zesp, avg(placa_pod) as srednia from pracownicy group by id_zesp) srednie using(id_zesp);
+
+13. SELECT nazwisko,z.nazwa,srednia as "srednia zespolu",e.placa_od,e.placa_do from pracownicy left outer join zespoly z using(id_zesp) left outer join (select id_zesp, avg(placa_pod) as srednia from pracownicy group by id_zesp) srednie using(id_zesp) left outer join etaty e on etat=e.nazwa;
+

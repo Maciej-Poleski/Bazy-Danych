@@ -1,0 +1,25 @@
+psql -U postgres
+\h
+\?
+\d
+\c
+\l
+uytkownicy i role
+\du
+\du+
+create user nazwa;
+select * from pg_user;
+SELECT * from pg_roles ;
+CREATE DATABASE zzzmpp02 OWNER zzzmpp02;
+CREATE TABLE  osoby();
+drop table osoby;
+CREATE TABLE osoby (
+imie varchar,
+wiek int);
+\d osoby
+SELECT * from osoby;
+INSERT INTO osoby VALUES ('Robert', 13);
+DELETE FROM osoby WHERE wiek =13;
+psql -f plik
+psql < plik
+\i plik

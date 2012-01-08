@@ -1,0 +1,44 @@
+1 SELECT * from zespoly ;
+
+2 SELECT * from pracownicy ;
+
+3 SELECT nazwisko,etat,placa_pod*12 as roczne_dochody from pracownicy ;
+
+4 SELECT nazwisko,placa_pod+greatest(placa_dod,0) as miesieczne_dochody from pracownicy ;
+
+5 SELECT * from zespoly order by nazwa ;
+
+6 SELECT distinct etat from pracownicy ;
+
+7 SELECT * from pracownicy where etat='ASYSTENT' ;
+
+8 SELECT * from pracownicy where id_zesp=20 or id_zesp=30 order by placa_pod+greatest(placa_dod,0) desc;
+
+9 SELECT * from pracownicy where placa_pod >=300 and placa_pod<=1800;
+
+10 SELECT * from pracownicy where right(nazwisko,3) ='ski';
+
+11 SELECT * from pracownicy where placa_pod + greatest(placa_dod,0)>1000 and id_szefa is not null;
+
+12 SELECT nazwisko,zatrudniony,etat from pracownicy where etat='ASYSTENT' and (extract(year from zatrudniony)=1992 or extract(year from zatrudniony)=1993);
+
+13 SELECT * from pracownicy where placa_dod >100 order by etat,nazwisko;
+
+14 select nazwisko || ' pracuje od ' || zatrudniony || ' i zarabia ' || placa_pod  as "PROFESOROWIE" from pracownicy where etat='PROFESOR' order by placa_pod + greatest(placa_dod,0) desc;
+
+15 SELECT nazwisko,round((placa_pod + greatest(placa_dod,0))*1.15,0) as "place" from pracownicy ;
+
+16 SELECT rpad(nazwisko,20,'.') || lpad(etat,20,'.') as "nazwisko i etat" from pracownicy ;
+
+17 select left(etat,2) || id_prac as "identyfikatory" from pracownicy ;
+
+18 SELECT nazwisko,translate(nazwisko,'ABCabc','XXXxxx') as zmienione_nazwisko from pracownicy ;
+
+19 SELECT nazwisko,to_char(zatrudniony,'Month, DD IYYY') as data_zatrudnienia from pracownicy where id_zesp =20 ;
+
+20 SELECT to_char(current_date,'Day') as dzis;
+
+21 select imie,nazwisko,case when placa_pod + greatest(placa_dod,0) <1000 then '<' when placa_pod + greatest(placa_dod,0) = 1000 then '=' else '>' end as pensja from pracownicy ;
+
+select [distinct] from where order by
+http://www.postgresql.org/docs/9.2/interactive/queries.html
